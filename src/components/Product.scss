@@ -5,11 +5,8 @@
 	border-radius: 10px;
 	transition: transform 1s ease-out;
 	position: relative;
-
-	&>a {
-		text-decoration: none;
-		color: #333;
-	}
+	text-decoration: none;
+	color: #333;
 
 	.image-holder {
 		width: 250px;
@@ -38,7 +35,7 @@
 		margin-bottom: 10px;
 	}
 
-	.add-to-basket {
+	.details-button {
 		opacity: 0;
 		transition: .5s ease;
 		position: absolute;
@@ -50,7 +47,7 @@
 	&:hover {
 		transform: scale(1.04);
 
-		.add-to-basket {
+		.details-button {
 			transform: scaleY(1) translate(-50%, 50%);
 			opacity: 1;
 		}
