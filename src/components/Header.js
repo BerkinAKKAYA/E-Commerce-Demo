@@ -1,5 +1,5 @@
 import React from 'react'
-import './Header.css'
+import './Header.scss'
 import { IconButton, Badge, Tooltip } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
