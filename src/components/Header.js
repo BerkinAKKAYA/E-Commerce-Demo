@@ -53,7 +53,7 @@ function Header() {
 				<Link to="/checkout">
 					<Tooltip title="Basket">
 						<Badge badgeContent={state.basket.length} color="primary">
-							<IconButton aria-label="basket" color="primary">
+							<IconButton aria-label="basket" color={state.basket.length > 0 ? 'primary' : 'default'}>
 								<ShoppingCartCheckoutIcon />
 							</IconButton>
 						</Badge>
