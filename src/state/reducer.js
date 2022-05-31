@@ -9,8 +9,8 @@ function reducer(state, action) {
 
 		case "REMOVE_FROM_BASKET":
 			const basket = state.basket;
-			const index = basket.findIndex(x => x == action.item);
-			if (index != -1) {
+			const index = basket.findIndex(x => x === action.item);
+			if (index !== -1) {
 				basket.splice(index, 1);
 			}
 			return { ...state, basket }

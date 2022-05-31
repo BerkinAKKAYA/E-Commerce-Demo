@@ -6,7 +6,7 @@ import { useStateValue } from '../state/StateProvider';
 function ProductDetail() {
 	let { product_id } = useParams();
 	const [state, dispatch] = useStateValue();
-	const product_detail = state.products.find(x => x.product_id == product_id);
+	const product_detail = state.products.find(x => x.product_id === product_id);
 
 	const AddToBasket = () => {
 		dispatch({
