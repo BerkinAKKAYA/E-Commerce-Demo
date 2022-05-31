@@ -9,7 +9,9 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 function Header() {
 	return (
 		<header>
-			<h1>e-commerce</h1>
+			<a href='/'>
+				<h1>e-commerce</h1>
+			</a>
 
 			{/* Search Box */}
 			<TextField
