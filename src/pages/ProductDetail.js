@@ -2,6 +2,8 @@ import "./ProductDetail.scss";
 import React from 'react'
 import { useParams } from "react-router-dom";
 import { useStateValue } from '../state/StateProvider';
+import { AddShoppingCart, RemoveShoppingCart } from "@mui/icons-material";
+import { Button } from "@mui/material";
 
 function ProductDetail() {
 	let { product_id } = useParams();
@@ -25,16 +27,18 @@ function ProductDetail() {
 	return (
 		<div className="outer">
 			<div className="inner">
-				<img src={product_detail.image} />
+				<img src={product_detail.image} alt="image of product" />
 
 				<div className="details">
 					<h2>Product {product_id}</h2>
 
-					<button onClick={AddToBasket}>Add To Basket</button>
+					<Button variant="contained" color="success" onClick={AddToBasket} startIcon={<AddShoppingCart />}>
+						Add To Basket
+					</Button>
 
-					<button onClick={RemoveFromBasket} disabled={!state.basket.includes(product_id)}>
+					<Button variant="contained" color="error" onClick={RemoveFromBasket} startIcon={<RemoveShoppingCart />} disabled={state.basket.length <= 0}>
 						Remove From Basket
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>
