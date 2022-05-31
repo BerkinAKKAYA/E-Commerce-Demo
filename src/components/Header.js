@@ -1,17 +1,21 @@
-import React from 'react'
 import './Header.scss'
+import React from 'react'
+import { Link } from "react-router-dom";
 import { IconButton, Badge, Tooltip } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { ReceiptLong, Search } from '@mui/icons-material';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import { useStateValue } from '../state/StateProvider';
 
 function Header() {
+	const [state] = useStateValue();
+
 	return (
 		<header>
-			<a href='/'>
+			<Link to='/'>
 				<h1>e-commerce</h1>
-			</a>
+			</Link>
 
 			{/* Search Box */}
 			<TextField
@@ -46,13 +50,15 @@ function Header() {
 					</IconButton>
 				</Tooltip>
 
-				<Tooltip title="Basket">
-					<Badge badgeContent={1} color="primary">
-						<IconButton aria-label="basket" color="primary">
-							<ShoppingCartCheckoutIcon />
-						</IconButton>
-					</Badge>
-				</Tooltip>
+				<Link to="/checkout">
+					<Tooltip title="Basket">
+						<Badge badgeContent={state.basket.length} color="primary">
+							<IconButton aria-label="basket" color="primary">
+								<ShoppingCartCheckoutIcon />
+							</IconButton>
+						</Badge>
+					</Tooltip>
+				</Link>
 			</div>
 		</header>
 	)

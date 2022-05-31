@@ -1,0 +1,14 @@
+.outer {
+	text-align: center;
+	margin: 50px 0;
+
+	.inner {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 50px;
+
+		button {
+			display: block;
+		}
+	}
+}
