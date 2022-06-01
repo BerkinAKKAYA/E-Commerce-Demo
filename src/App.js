@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Checkout from './pages/Checkout'
 import ProductDetail from './pages/ProductDetail'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SignIn from './pages/SignIn';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/detail/:product_id" element={<ProductDetail />} />
+          <Route path="/sign-in" element={<SignIn />} />
         </Routes>
 
         <Footer />

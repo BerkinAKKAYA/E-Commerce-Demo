@@ -6,7 +6,7 @@ const initialState = {
 		{ product_id: "D", price: 53, image: "https://ih1.redbubble.net/image.3576887324.8486/ssrco,classic_tee,flatlay,322e3f:696a94a5d4,front,wide_portrait,750x1000.jpg" },
 		{ product_id: "E", price: 27, image: "https://ih1.redbubble.net/image.523528941.5522/ssrco,classic_tee,flatlay,fafafa:ca443f4786,front,wide_portrait,750x1000.jpg" },
 	],
-	basket: []
+	basket: [],
 }
 
 export default initialState;

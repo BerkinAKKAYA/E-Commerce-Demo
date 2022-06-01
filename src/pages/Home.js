@@ -8,7 +8,6 @@ function Home() {
 
 	return (
 		<section id="products">
-
 			{
 				state.products.map((product, i) =>
 					<Product price={product.price} product_id={product.product_id} image={product.image} key={i}>
