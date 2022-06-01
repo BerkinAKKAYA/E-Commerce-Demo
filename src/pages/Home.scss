@@ -1,8 +1,25 @@
-#products {
+#welcome {
+	text-align: center;
+	margin: 50px 0;
+
+	a {
+		color: #00f;
+	}
+
+	p {
+		margin-top: 10px;
+
+		span {
+			opacity: .5;
+		}
+	}
+}
+
+#home_products {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-	gap: 30px;
-	max-width: 900px;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 20px;
+	max-width: 700px;
 	width: calc(100vw - 100px);
 	margin: 50px auto;
 }

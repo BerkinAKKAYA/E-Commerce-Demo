@@ -1,16 +1,27 @@
 import "./SignIn.scss"
 import React, { useState } from 'react'
 import { useStateValue } from '../state/StateProvider';
-import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Stack, TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Stack, TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { ChevronRight, Visibility, VisibilityOff } from '@mui/icons-material';
+import { auth } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
+	// if login type == #register, make register pane enabled. Otherwise login pane should be enabled.
+	const initialPageType = window.location.hash === '#register' ? 'register' : 'login';
+
 	const [state] = useStateValue();
-	const [pageType, setPageType] = useState('login');
+	const [pageType, setPageType] = useState(initialPageType);
 	const [email, setEmail] = useState('');
-	const [fullname, setFullname] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState('');
+	const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
+	const navigate = useNavigate();
+
+	if (state.user) {
+		navigate("/");
+	}
 
 	const IsValidMail = mail => {
 		let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -18,11 +29,55 @@ function SignIn() {
 	}
 
 	const CanSubmitForm = () => {
-		return IsValidMail(email) && password.length > 3 && (pageType !== 'register' || !!fullname);
+		return IsValidMail(email) && password.length > 5;
+	}
+
+	const SubmitWithEnter = e => {
+		if (e.key === 'Enter' && CanSubmitForm()) {
+			SubmitForm();
+		}
 	}
 
 	const SubmitForm = () => {
-		console.log(pageType, fullname, email, password);
+		if (pageType === 'login') {
+			Login(email, password);
+		} else {
+			Register(email, password)
+		}
+	}
+
+	const Login = async (email, password) => {
+		setSubmitButtonLoading(true);
+		try {
+			const authResponse = await auth.signInWithEmailAndPassword(email, password);
+
+			console.log(authResponse);
+
+			if (authResponse) {
+				// TODO: Show Success Alert
+				navigate("/");
+			}
+		} catch (error) {
+			// TODO: Show Error Alert
+			alert(error.message || "An error occured, couldn't create account...");
+		}
+		setSubmitButtonLoading(false);
+	}
+
+	const Register = async (email, password) => {
+		setSubmitButtonLoading(true);
+		try {
+			const authResponse = await auth.createUserWithEmailAndPassword(email, password);
+
+			if (authResponse) {
+				// TODO: Show Success Alert
+				navigate("/");
+			}
+		} catch (error) {
+			// TODO: Show Error Alert
+			alert(error.message || "An error occured, couldn't create account...");
+		}
+		setSubmitButtonLoading(false);
 	}
 
 	return (
@@ -41,19 +96,6 @@ function SignIn() {
 				<h2>{pageType === 'login' ? 'Login' : 'Register'}</h2>
 
 				<Stack spacing={2} id="form">
-					{
-						/* Name & Surname if creating a new account */
-						pageType !== 'login' ?
-							<TextField
-								label="Name & Surname"
-								variant="outlined"
-								type="text"
-								onChange={e => setFullname(e.target.value)}
-								value={fullname}
-							/>
-							: ''
-					}
-
 					{/* E-Mail */}
 					<TextField
 						label="E-Mail"
@@ -61,6 +103,7 @@ function SignIn() {
 						type="email"
 						value={email}
 						onChange={e => setEmail(e.target.value)}
+						onKeyDown={SubmitWithEnter}
 						error={!!email && !IsValidMail(email)}
 					/>
 
@@ -72,8 +115,9 @@ function SignIn() {
 							label="Password"
 							type={showPassword ? 'text' : 'password'}
 							value={password}
-							error={password.length > 0 && password.length <= 3}
+							error={password.length > 0 && password.length <= 5}
 							onChange={e => { setPassword(e.target.value) }}
+							onKeyDown={SubmitWithEnter}
 							endAdornment={
 								<InputAdornment position="end">
 									<IconButton
@@ -90,9 +134,16 @@ function SignIn() {
 					</FormControl>
 				</Stack>
 
-				<Button variant="contained" endIcon={<ChevronRight />} color="success" onClick={SubmitForm} disabled={!CanSubmitForm()}>
+				<LoadingButton
+					variant="contained"
+					endIcon={<ChevronRight />}
+					color="success"
+					onClick={SubmitForm}
+					disabled={!CanSubmitForm()}
+					loading={submitButtonLoading}
+				>
 					{pageType === 'login' ? 'Login' : 'Create'}
-				</Button>
+				</LoadingButton>
 			</Paper>
 		</main>
 	)

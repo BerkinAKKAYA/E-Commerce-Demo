@@ -6,8 +6,23 @@ import Checkout from './pages/Checkout'
 import ProductDetail from './pages/ProductDetail'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignIn from './pages/SignIn';
+import { useEffect } from 'react';
+import { auth } from './firebase';
+import { useStateValue } from './state/StateProvider';
 
 function App() {
+  const [state, dispatch] = useStateValue();
+
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        dispatch({ type: 'SET_USER', user });
+      } else {
+        dispatch({ type: 'SET_USER', user: null });
+      }
+    });
+  }, []);
+
   return (
     <Router>
       <div className="App">

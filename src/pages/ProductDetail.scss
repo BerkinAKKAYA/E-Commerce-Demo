@@ -18,8 +18,13 @@
 			flex-direction: column;
 			gap: 8px;
 
-			h2 {
-				margin-bottom: 36px;
+			.price {
+				margin: 16px 0 32px 0;
+			}
+
+			.in-basket {
+				margin-top: 12px;
+				font-size: 0.9em;
 			}
 		}
 	}
